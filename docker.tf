@@ -9,10 +9,18 @@ resource "aws_instance" "docker" {
     volume_size = 50  # Set root volume size to 50GB
     volume_type = "gp3"  # Use gp3 for better performance (optional)
   }
+  
   # user_data = file("docker.sh")
-  # tags = {
-  #   Name    = "docker-tf"
-  # }
+  tags = {
+    Name    = "docker-tf"
+  }
+}
+resource "null_resource" "docker" {
+  # Changes to any instance of the instance requires re-provisioning
+  triggers = {
+    instance_id = aws_instance.docker.id
+  }
+
    connection {
     host = aws_instance.docker.public_ip
     type = "ssh"
@@ -21,7 +29,7 @@ resource "aws_instance" "docker" {
   }
 
   provisioner "file" {
-    source      = "frontend.sh"
+    source      = "docker.sh"
     destination = "/ec2-user/docker.sh"
   }
 
