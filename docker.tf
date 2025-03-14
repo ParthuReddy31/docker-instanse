@@ -30,14 +30,14 @@ resource "null_resource" "docker" {
 
   provisioner "file" {
     source      = "docker.sh"
-    destination = "/ec2-user/docker.sh"
+    destination = "/home/ec2-user/docker.sh"
   }
 
   provisioner "remote-exec" {
     # Bootstrap script called with public_ip of each node in the cluster
     inline = [
-      "chmod +x /ec2-user/docker.sh",
-      "sudo sh /ec2-user/docker.sh "
+      "chmod +x /home/ec2-user/docker.sh",
+      "sudo sh /home/ec2-user/docker.sh "
     ]
   }
 }
