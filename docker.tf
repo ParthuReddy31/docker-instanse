@@ -15,32 +15,32 @@ resource "aws_instance" "docker" {
     Name    = "docker-tf"
   }
 }
-resource "null_resource" "docker" {
-  # Changes to any instance of the instance requires re-provisioning
-  triggers = {
-    instance_id = aws_instance.docker.id
-  }
+# resource "null_resource" "docker" {
+#   # Changes to any instance of the instance requires re-provisioning
+#   triggers = {
+#     instance_id = aws_instance.docker.id
+#   }
 
-   connection {
-    host = aws_instance.docker.public_ip
-    type = "ssh"
-    user     = "ec2-user"
-    password = "DevOps321"
-  }
+#    connection {
+#     host = aws_instance.docker.public_ip
+#     type = "ssh"
+#     user     = "ec2-user"
+#     password = "DevOps321"
+#   }
 
-  provisioner "file" {
-    source      = "docker.sh"
-    destination = "/home/ec2-user/docker.sh"
-  }
+#   provisioner "file" {
+#     source      = "docker.sh"
+#     destination = "/home/ec2-user/docker.sh"
+#   }
 
-  provisioner "remote-exec" {
-    # Bootstrap script called with public_ip of each node in the cluster
-    inline = [
-      "chmod +x /home/ec2-user/docker.sh",
-      "sudo sh /home/ec2-user/docker.sh "
-    ]
-  }
-}
+#   provisioner "remote-exec" {
+#     # Bootstrap script called with public_ip of each node in the cluster
+#     inline = [
+#       "chmod +x /home/ec2-user/docker.sh",
+#       "sudo sh /home/ec2-user/docker.sh "
+#     ]
+#   }
+# }
 
 resource "aws_security_group" "allow_all_docker" {
   name        = "allow_all_docker"
