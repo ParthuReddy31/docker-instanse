@@ -35,3 +35,11 @@ mv /tmp/eksctl /usr/local/bin
 # tar -xzf eksctl_Linux_amd64.tar.gz -C /tmp
 # rm eksctl_Linux_amd64.tar.gz
 # mv /tmp/eksctl /usr/local/bin/
+
+# alias ka="kubectl apply -f"
+# alias kp="kubectl get pods"
+
+# helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
